@@ -3,9 +3,7 @@ package patterns.visitor;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 
 public class VisitorTest {
 	
@@ -23,7 +21,7 @@ public class VisitorTest {
 	
 
 
-	public void testCostTax() {
+	public void testCostAll() {
 		TaxVisitor taxation = new TaxVisitor();
 		Fruit plum = new Fruit(2.00);
 		Meat steak = new Meat(25.00);
@@ -42,8 +40,23 @@ public class VisitorTest {
 		
 	}
 	
-	public void testCostAll() {
+	public void testCostTax() {
+		TaxVisitor taxation = new TaxVisitor();
+		Fruit plum = new Fruit(2.00);
+		Meat steak = new Meat(25.00);
+		Toiletries shampoo = new Toiletries(10.00);
 		
+		taxation.setTaxFruit(1.08);
+		taxation.setTaxMeat(1.09);
+		taxation.setTaxToiletries(10.00);
+		
+		plum.accept(taxation);
+		steak.accept(taxation);
+		shampoo.accept(taxation);
+		
+		assertEquals(2.16, plum.getCost(), 0.01);
+		assertEquals(27.25, steak.getCost(), 0.01);
+		assertEquals(11.00, shampoo.getCost(), 0.01);
 		
 	}
 
